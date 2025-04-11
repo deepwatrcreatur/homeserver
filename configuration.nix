@@ -20,7 +20,6 @@
     wget
     curl
     iperf3
-    sops
     age
     oh-my-posh
     tmux
@@ -28,6 +27,7 @@
     nmap
     helix
     bat
+    sops
     compose2nix
     docker
     nodejs_20
@@ -83,6 +83,10 @@
     wantedBy = [ "multi-user.target" ];
   };
 
+  sops = {
+    defaultSopsFile = ./secrets.yaml;
+    age.keyFile = "/etc/nixos/age-key.txt";
+  };
 
   systemd.services.iperf3 = {
     description = "iPerf3 Server";
@@ -108,7 +112,7 @@
     networks."50-eth0" = {
       matchConfig.Name = "eth0";
       networkConfig = {
-        DHCP = "ipv4";
+        DHCP = "yes";
         IPv6AcceptRA = true;
       };
       linkConfig.RequiredForOnline = "routable";
