@@ -61,6 +61,7 @@
       "--network=host"
     ];
   };
+  
   systemd.services."podman-homebridge-homebridge" = {
     serviceConfig = {
       Restart = lib.mkOverride 90 "always";
@@ -86,6 +87,21 @@
   sops = {
     defaultSopsFile = ./secrets.yaml;
     age.keyFile = "/etc/nixos/age-key.txt";
+  };
+
+    services.influxdb2 = {
+    enable = true;
+    settings = {
+      http-bind-address = ":8086";
+      auth-enabled = true;
+      admin-user = "admin";
+      admin-password = config.sops.secrets.influxdb_password.path;
+    };
+  };
+
+  sops.secrets.influxdb_password = {
+    sopsFile = ./influxdb-secrets.yaml;
+    owner = "influxdb2";
   };
 
   systemd.services.iperf3 = {
@@ -122,7 +138,7 @@
   services.openssh.enable = true;
   services.openssh.settings.PermitRootLogin = "yes";
 
-  networking.firewall.allowedTCPPorts = [ 5201 8581 9000 ]; # Default Homebridge port
+  networking.firewall.allowedTCPPorts = [ 5201 8086 8581 9000 ]; # Default Homebridge port
 
   systemd.mounts = [{
     what = "debugfs";
