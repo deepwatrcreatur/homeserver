@@ -140,7 +140,8 @@
   services.openssh.enable = true;
   services.openssh.settings.PermitRootLogin = "yes";
 
-  networking.firewall.allowedTCPPorts = [ 5201 8086 8581 9000 ]; # Default Homebridge port
+  # networking.firewall.allowedTCPPorts = [ 5201 8086 8581 9000 ]; # Default Homebridge port
+  networking.firewall.enable = false;
 
   systemd.mounts = [{
     what = "debugfs";
@@ -162,7 +163,7 @@
     ];
   };
   # Locale settings
-  i18n.defaultLocale = "en_US.utf8";
+  i18n.defaultLocale = "en_US.UTF-8";
   i18n.supportedLocales = [ "en_US.UTF-8/UTF-8" ]; # Optional, ensures generation
     
   system.stateVersion = "25.05";
