@@ -9,6 +9,8 @@
   # Use the default nixpkgs channel instead of redefining it
   nixpkgs.config.allowUnfree = true;
 
+  security.sudo.wheelNeedsPassword = false;
+
   environment.systemPackages = with pkgs; [
     nushell
     fzf
