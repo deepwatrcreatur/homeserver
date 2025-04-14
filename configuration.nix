@@ -9,9 +9,39 @@
   # Use the default nixpkgs channel instead of redefining it
   nixpkgs.config.allowUnfree = true;
 
+  # Add your custom binary cache
+  nix = {
+    settings.experimental-features = [ "nix-command" "flakes" ];
+    settings.download-buffer-size = 1048576000;
+
+    # List of binary caches to use (default includes cache.nixos.org)
+    settings.substituters = [ "https://cache.nixos.org/" "https://cuda-maintainers.cachix.org http://cache.deepwatercreature.com"];
+    settings.trusted-public-keys = [
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
+      "cache.deepwatercreature.com-1:n7+NSSNvxLJBRpjB8ai2zsVtK1L9mnFtEnulbd4/lUY="
+    ];
+    distributedBuilds = true;
+    buildMachines = [
+      {
+        hostName = "cache.deepwatercreature.com";
+        system = "x86_64-linux";  # Adjust if different (check with `uname -m` on cache server)
+        maxJobs = 8;  # Match CPU cores or adjust
+        speedFactor = 2;  # Priority over other builders
+        supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+        sshUser = "deepwatrcreatur";  # Non-root user on cache server
+        sshKey = "/root/.ssh/nix-remote";  # Root-owned key for nix-daemon
+      }
+    ];
+    settings = {
+      trusted-users = [ "root" "@wheel" ];  # Client-side trust
+    };
+  };
+
   security.sudo.wheelNeedsPassword = false;
 
   environment.systemPackages = with pkgs; [
+    nh
     nushell
     fzf
     yazi
