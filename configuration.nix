@@ -15,7 +15,7 @@
     settings.download-buffer-size = 1048576000;
 
     # List of binary caches to use (default includes cache.nixos.org)
-    settings.substituters = [ "https://cache.nixos.org/" "https://cuda-maintainers.cachix.org http://cache.deepwatercreature.com"];
+    settings.substituters = [ "http://cache.deepwatercreature.com https://cache.nixos.org/" "https://cuda-maintainers.cachix.org"];
     settings.trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
