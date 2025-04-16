@@ -30,7 +30,7 @@
         speedFactor = 2;  # Priority over other builders
         supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
         sshUser = "deepwatrcreatur";  # Non-root user on cache server
-        sshKey = "/root/.ssh/nix-remote";  # Root-owned key for nix-daemon
+        sshKey = "/root/.ssh/id_ed25519";  # Root-owned key for nix-daemon
       }
     ];
     settings = {
