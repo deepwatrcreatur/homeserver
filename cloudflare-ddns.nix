@@ -14,9 +14,12 @@ in
   virtualisation.oci-containers.containers.cloudflare-ddns = {
     image = "oznu/cloudflare-ddns:latest";
     autoStart = true;
+    volumes = [
+      "/etc/nixos/cloudflare-ddns-config.json:/config.json:ro"
+    ];
     environment = {
       ZONE = "deepwatercreature.com";
-      PROXIED = "true";
+      PROXIED = "false";
       PUID = "1000";
       PGID = "1001";
       API_KEY_FILE = "/run/secrets/API_KEY";  # Path inside the container
