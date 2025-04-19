@@ -1,46 +1,45 @@
-# cloudflare-ddns.nix
+# /etc/nixos/modules/cloudflare-ddns.nix
 { config, pkgs, lib, ... }:
 
 let
-  # ageKeyFile = builtins.toPath ./age-key.txt;
-  ageKeyFile = "/etc/nixos/age-key.txt";
-  # Path to the sops-encrypted API_KEY file
+  # Path where sops-nix will place the decrypted API_KEY file on the host
+  # This path is determined by sops-nix based on the secret definition below
   apiKeyFile = config.sops.secrets."API_KEY".path;
-  apiKey = builtins.readFile apiKeyFile;
-
 in
 {
   # Define the container
   virtualisation.oci-containers.containers.cloudflare-ddns = {
     image = "oznu/cloudflare-ddns:latest";
     autoStart = true;
-    volumes = [
-      "/etc/nixos/cloudflare-ddns-config.json:/config.json:ro"
-    ];
     environment = {
       ZONE = "deepwatercreature.com";
       PROXIED = "false";
-      PUID = "1000";
-      PGID = "1001";
-      API_KEY_FILE = "/run/secrets/API_KEY";  # Path inside the container
+      API_KEY_FILE = "/run/secrets/API_KEY"; # Path inside the container
+      # Add SUBDOMAIN = "your-subdomain"; if needed
+      # Add RRTYPE = "A"; or "AAAA" if needed
     };
-    # Use the decrypted API_KEY from sops
-    environmentFiles = [ apiKeyFile ];
-
-    # Configure DNS using extraOptions
     extraOptions = [
-      "--dns=127.0.0.1"
       "--dns=1.1.1.1"
-      "-v" "${apiKeyFile}:/run/secrets/API_KEY:ro"  # Mount the decrypted API_KEY file
-];
+      "--dns=1.0.0.1"
+      # Mount the decrypted key read-only
+      # Source path `apiKeyFile` comes from the sops.secrets definition below
+      # Target path `/run/secrets/API_KEY` matches the API_KEY_FILE env var
+      "-v" "${apiKeyFile}:/run/secrets/API_KEY:ro"
+    ];
   };
 
-  # Configure sops to manage the API_KEY
+  # Configure sops-nix to manage the API_KEY secret
   sops.secrets."API_KEY" = {
-    sopsFile = ../secrets/cloudflare-secrets.yaml;  # Path to your sops-encrypted file
-    format = "yaml";            # Format of the secrets file
+    # This path is relative to this file (/etc/nixos/modules/cloudflare-ddns.nix)
+    # It correctly points to /etc/nixos/secrets/cloudflare-secrets.yaml
+    sopsFile = ../secrets/cloudflare-secrets.yaml;
+    format = "yaml";
+    # Optional: Define owner/group if needed, defaults might be sufficient
+    # owner = config.users.users.root.name; # Or another user
+    # group = config.users.groups.root.name; # Or another group
   };
 
-  # Configure the global age key file
-  sops.age.keyFile = ageKeyFile;
+  # No need for sops.age.keyFile or sops.enable here,
+  # as they are handled globally or automatically.
 }
+
