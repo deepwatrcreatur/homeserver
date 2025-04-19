@@ -117,8 +117,8 @@
   };
 
   sops = {
-    defaultSopsFile = ./secrets.yaml;
-    age.keyFile = "/etc/nixos/age-key.txt";
+    defaultSopsFile = ./secrets/secrets.yaml;
+    age.keyFile = "/etc/nixos/secrets/age-key.txt";
   };
 
     services.influxdb2 = {
