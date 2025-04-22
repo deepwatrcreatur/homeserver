@@ -15,11 +15,12 @@
     settings.download-buffer-size = 1048576000;
 
     # List of binary caches to use (default includes cache.nixos.org)
-    settings.substituters = [ "http://cache.deepwatercreature.com https://cache.nixos.org/" "https://cuda-maintainers.cachix.org"];
+    #settings.substituters = [ "http://cache.deepwatercreature.com https://cache.nixos.org/" "https://cuda-maintainers.cachix.org"];
+    settings.substituters = [ "https://cache.nixos.org/" "https://cuda-maintainers.cachix.org"];
     settings.trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
-      "cache.deepwatercreature.com-1:n7+NSSNvxLJBRpjB8ai2zsVtK1L9mnFtEnulbd4/lUY="
+      #"cache.deepwatercreature.com-1:n7+NSSNvxLJBRpjB8ai2zsVtK1L9mnFtEnulbd4/lUY="
     ];
     distributedBuilds = true;
     buildMachines = [
@@ -63,6 +64,11 @@
     compose2nix
     docker
     nodejs_20
+    rsync
+    yt-dlp
+    elixir
+    erlang
+    docker-compose
   ];
 
   # Runtime
