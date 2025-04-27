@@ -19,7 +19,7 @@ in
     ];
   };
   sops.secrets."API_KEY" = {
-    sopsFile = "${self}/secrets/cloudflare-secrets.yaml"; # Use self to reference flake root
+    sopsFile = ../secrets/cloudflare-secrets.yaml; # Relative path to flake root
     format = "yaml";
   };
 }
