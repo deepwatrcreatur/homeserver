@@ -28,11 +28,13 @@
             ({ config, pkgs, lib, ... }: {
               # === SOPS Configuration ===
               sops.secrets.REOLINK_CAMERA_PASSWORD = {
-                sopsFile = "${self}/secrets/reolink-secrets.yaml"; # Use self to reference flake root
+                sopsFile = "/home/deepwatrcreatur/homeserver/secrets/reolink-secrets.yaml"; # Absolute path
                 owner = "hass";
                 group = "hass";
                 mode = "0440";
               };
+              # Global SOPS configuration
+              sops.age.keyFile = "/home/deepwatrcreatur/.config/sops/age/keys.txt"; # Adjust to your key path
               users.users.hass.extraGroups = [ "keys" ];
               systemd.services."home-assistant".serviceConfig = {
                 LoadCredential = lib.mkForce null;

@@ -19,7 +19,7 @@ in
     ];
   };
   sops.secrets."API_KEY" = {
-    sopsFile = ../secrets/cloudflare-secrets.yaml; # Relative path to flake root
+    sopsFile = "/home/deepwatrcreatur/homeserver/secrets/cloudflare-secrets.yaml"; # Absolute path
     format = "yaml";
   };
 }
