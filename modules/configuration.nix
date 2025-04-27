@@ -69,8 +69,6 @@
     elixir
     erlang
     docker-compose
-    fish
-    lazygit
   ];
 
   # Runtime
