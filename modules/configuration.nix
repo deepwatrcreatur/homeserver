@@ -61,6 +61,7 @@
     helix
     bat
     sops
+    nix-inspect
     compose2nix
     docker
     nodejs_20
@@ -69,6 +70,8 @@
     elixir
     erlang
     docker-compose
+    fish
+    lazygit
   ];
 
   # Runtime
@@ -138,7 +141,7 @@
   };
 
   sops.secrets.influxdb_password = {
-    sopsFile = /home/deepwatrcreatur/homeserver/secrets/influxdb-secrets.yaml;
+    sopsFile = ../secrets/influxdb-secrets.yaml;
     owner = "influxdb2";
   };
 
