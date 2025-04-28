@@ -3,7 +3,7 @@
 stdenv.mkDerivation {
   pname = "terminfo-extra";
   version = "1.0";
-  src = ./terminfo;
+  src = ../terminfo;
 
   buildInputs = [ ncurses ];
 
