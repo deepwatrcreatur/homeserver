@@ -19,7 +19,7 @@ in
     ];
   };
   sops.secrets."API_KEY" = {
-    sopsFile = "/home/deepwatrcreatur/homeserver/secrets/cloudflare-secrets.yaml"; # Absolute path
+    sopsFile = "/etc/nixos/secrets/cloudflare-secrets.yaml"; # Absolute path
     format = "yaml";
   };
 }

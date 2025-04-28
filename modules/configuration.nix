@@ -141,7 +141,7 @@
   };
 
   sops.secrets.influxdb_password = {
-    sopsFile = ../secrets/influxdb-secrets.yaml;
+    sopsFile = "/etc/nixos/secrets/influxdb-secrets.yaml";
     owner = "influxdb2";
   };
 

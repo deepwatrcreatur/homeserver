@@ -28,7 +28,7 @@
             ({ config, pkgs, lib, ... }: {
               # === SOPS Configuration ===
               sops.secrets.REOLINK_CAMERA_PASSWORD = {
-                sopsFile = ./secrets/reolink-secrets.yaml; 
+                sopsFile = "/etc/nixos/secrets/reolink-secrets.yaml"; 
                 owner = "hass";
                 group = "hass";
                 mode = "0440";
