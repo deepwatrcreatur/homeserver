@@ -72,7 +72,7 @@
     docker-compose
     fish
     lazygit
-    (pkgs.callPackage ./pkgs/terminfo-extra.nix {})
+    (pkgs.callPackage ../pkgs/terminfo-extra.nix {})
   ];
 
   # Runtime
