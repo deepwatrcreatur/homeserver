@@ -18,7 +18,7 @@ in
       "-v" "${apiKeyFile}:/run/secrets/API_KEY:ro"
     ];
   };
-  sops.secrets."API_KEY" = {
+  sops.secrets.API_KEY = {
     sopsFile = "/etc/nixos/secrets/cloudflare-secrets.yaml"; # Absolute path
     format = "yaml";
   };
