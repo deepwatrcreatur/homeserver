@@ -125,10 +125,10 @@
     wantedBy = [ "multi-user.target" ];
   };
 
-  sops = {
-    defaultSopsFile = ./secrets/secrets.yaml;
-    age.keyFile = "/etc/nixos/secrets/age-key.txt";
-  };
+  #sops = {
+  #  defaultSopsFile = ./secrets/secrets.yaml;
+  #  age.keyFile = "/etc/nixos/secrets/age-key.txt";
+  #};
 
     services.influxdb2 = {
     enable = true;
