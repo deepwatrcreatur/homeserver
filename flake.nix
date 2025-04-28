@@ -34,6 +34,7 @@
                 mode = "0440";
               };
               # Global SOPS configuration
+              sops.validateSopsFiles = false;
               sops.age.keyFile = "/etc/nixos/secrets/age-key.txt";
               users.users.hass.extraGroups = [ "keys" ];
               systemd.services."home-assistant".serviceConfig = {
