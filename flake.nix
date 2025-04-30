@@ -34,7 +34,7 @@
               sops.secrets.REOLINK_CAMERA_PASSWORD = {
                 sopsFile = "/etc/nixos/secrets/reolink-secrets.yaml";
                 owner = "hass";
-z                group = "hass";
+                group = "hass";
                 mode = "0440";
               };
               sops.validateSopsFiles = false;
