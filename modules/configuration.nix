@@ -71,6 +71,7 @@
     erlang
     docker-compose
     fish
+    ncurses #needed to get terminfo for ghostty
     lazygit
     (pkgs.callPackage ../pkgs/terminfo-extra.nix {})
   ];
