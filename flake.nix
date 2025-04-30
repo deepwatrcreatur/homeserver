@@ -45,11 +45,6 @@
                 EnvironmentFile = config.sops.secrets.REOLINK_CAMERA_PASSWORD.path;
               };
 
-              users.users.deepwatrcreatur = {
-                isNormalUser = true;
-                 home = "/home/deepwatrcreatur";
-              };
-
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
