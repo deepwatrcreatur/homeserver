@@ -4,9 +4,10 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     sops-nix.url = "github:Mic92/sops-nix";
+    home-manager.url = "github:nix-community/home-manager";
   };
 
-  outputs = { self, nixpkgs, sops-nix }:
+  outputs = { self, nixpkgs, sops-nix, home-manager, ... }:
     let
       lib = nixpkgs.lib;
       # Helper function to import all .nix files from a directory
@@ -24,6 +25,7 @@
         modules =
           [
             sops-nix.nixosModules.sops
+            home-manager.nixosModules.home-manager
           ]
           ++ (importModules ./modules)
           ++ [
@@ -32,7 +34,7 @@
               sops.secrets.REOLINK_CAMERA_PASSWORD = {
                 sopsFile = "/etc/nixos/secrets/reolink-secrets.yaml";
                 owner = "hass";
-                group = "hass";
+z                group = "hass";
                 mode = "0440";
               };
               sops.validateSopsFiles = false;
@@ -41,6 +43,12 @@
               systemd.services."home-assistant".serviceConfig = {
                 LoadCredential = lib.mkForce null;
                 EnvironmentFile = config.sops.secrets.REOLINK_CAMERA_PASSWORD.path;
+              };
+
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users.deepwatrcreatur = import ./home/deepwatrcreatur.nix;
               };
               systemd.services."home-assistant".wants = [ "sops-nix.service" ];
               systemd.services."home-assistant".after = [ "sops-nix.service" ];
