@@ -75,6 +75,8 @@
     (pkgs.callPackage ../pkgs/terminfo-extra.nix {})
   ];
 
+  programs.fish.enable = true;
+
   # Runtime
   virtualisation.podman = {
     enable = true;
