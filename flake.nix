@@ -49,6 +49,7 @@
                 useGlobalPkgs = true;
                 useUserPackages = true;
                 users.deepwatrcreatur = import ./users/deepwatrcreatur.nix;
+                users.root = import ./users/root.nix;
               };
               systemd.services."home-assistant".wants = [ "sops-nix.service" ];
               systemd.services."home-assistant".after = [ "sops-nix.service" ];
