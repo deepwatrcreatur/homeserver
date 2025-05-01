@@ -9,6 +9,8 @@
   # Use the default nixpkgs channel instead of redefining it
   nixpkgs.config.allowUnfree = true;
 
+  environment.shells = with pkgs; [ bashInteractive ]; # allow pct enter to get a proper shell
+
   # Add your custom binary cache
   nix = {
     settings.experimental-features = [ "nix-command" "flakes" ];
@@ -71,12 +73,8 @@
     erlang
     docker-compose
     fish
-    ncurses #needed to get terminfo for ghostty
     lazygit
-    (pkgs.callPackage ../pkgs/terminfo-extra.nix {})
   ];
-
-  programs.fish.enable = true;
 
   # Runtime
   virtualisation.podman = {
@@ -145,7 +143,7 @@
   };
 
   sops.secrets.influxdb_password = {
-    sopsFile = "/etc/nixos/secrets/influxdb-secrets.yaml";
+    sopsFile = ../secrets/influxdb-secrets.yaml;
     owner = "influxdb2";
   };
 
