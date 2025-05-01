@@ -10,6 +10,7 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.shells = with pkgs; [ bashInteractive ]; # allow pct enter to get a proper shell
+  services.nix-daemon.enable = true; # allow rebuilds
 
   # Add your custom binary cache
   nix = {
